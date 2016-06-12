@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
+    <title>Reichsparteitagstest</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -20,7 +20,13 @@
 
 <div class="content">
     <h1>Reichs&shy;parteitags&shy;test</h1>
-    <p>Enter a YouTube URL to test your favorite (or most hated) song for Reichsparteitag compatibility.</p>
+    <p>Enter a YouTube URL to test your favorite (or most hated) song for Reichsparteitag compatibility. Lack creativity? Try
+        <a href="javascript:void(0)" data-url="https://www.youtube.com/watch?v=XlD-LO3ogFM" class="example">Mark Forster - Wir sind groß</a>,
+        <a href="javascript:void(0)" data-url="https://www.youtube.com/watch?v=VS4fyxuFZvA" class="example">Xavier Naidoo - Dieser Weg</a>,
+        <a href="javascript:void(0)" data-url="https://www.youtube.com/watch?v=2czABFw6RnE" class="example">Helene Fischer - Atemlos durch die Nacht</a>,
+        or
+        <a href="javascript:void(0)" data-url="https://www.youtube.com/watch?v=Xy-qxClwtSg" class="example">Terrorgruppe - Mein Skateboard ist wichtiger als Deutschland</a>
+    </p>
 
     <p id="result-yes">Stop listening to this crap!</p>
     <p id="result-no">Alright, that song is probably OK.</p>
@@ -49,9 +55,10 @@
 </video>
 </div>
 
-<div class="image">
+<div class="image"></div>
 
-</div>
+<p>Image: <a href="https://de.wikipedia.org/wiki/Datei:Bundesarchiv_Bild_183-C12701,_N%C3%BCrnberg,_Reichsparteitag,_RAD-Appell.jpg">Wikipedia, Bundesarchiv (CC-BY-SA 3.0)</a></p>
+
 
 <div class="overlay">
     <div class="backdrop">&nbsp;</div>
@@ -64,18 +71,23 @@
 
 <!--https://www.youtube.com/watch?v=XlD-LO3ogFM-->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
 <script src="/node_modules/video.js/dist/video.min.js"></script>
 <script src="/node_modules/videojs-youtube/dist/Youtube.min.js"></script>
 <script type="text/javascript">
     var myPlayer = videojs('vid1');
+    myPlayer.on('ended', decide);
+
+    function decide() {
+        myPlayer.pause().reset();
+        $('#youtube-link').attr('disabled', false);
+        $('#submit').show();
+        $('#stop').hide();
+        $('.overlay').toggle();
+    }
 
     $('#search').on('submit', function(event) {
         event.preventDefault();
-
         $('#result-yes, #result-no').hide();
-
-
         $('#youtube-link').attr('disabled', true);
         $('#submit').hide();
         $('#stop').show();
@@ -84,28 +96,22 @@
 
     $('#stop').on('click', function (event) {
         event.preventDefault();
-        myPlayer.pause().reset();
-        $('#youtube-link').attr('disabled', false);
-        $('#submit').show();
-        $('#stop').hide();
-        $('.overlay').toggle();
-
+        decide();
     });
+
 
     $('#yes, #no').on('click', function (e) {
         e.preventDefault();
         $('.overlay').toggle();
         $.get('/' + $(this).attr('id'), {'uri': $('#youtube-link').val()});
-
         $('#result-' + $(this).attr('id')).show();
-
         $('#youtube-link').val('');
     });
 
+    $('.example').on('click', function () {
+        $('#youtube-link').val($(this).data('url'));
+        $('#search').submit();
+    });
 </script>
 </body>
 </html>
-
-</body>
-</html>
-
