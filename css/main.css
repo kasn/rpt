@@ -1,0 +1,88 @@
+body {
+    text-align: center;
+    box-sizing: border-box;
+    font-family: Helvetica, Ariel, sans-serif;
+}
+
+h1 {
+    font-size: 300%;
+    text-shadow: 2px 2px 4px white, 1px 1px 35px white, 3px 3px 7px white;
+}
+
+p {
+    font-size: 30px;
+    text-shadow: 1px 1px 2px white, 0 0 25px white, 0 0 5px white;
+
+}
+
+.image {
+    background-image: url('/rpt.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 1000px;
+
+}
+
+.content {
+    margin: 20px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.overlay .backdrop {
+    position: absolute;;
+    top: 0;
+    left: 0;
+    background: white;
+    opacity: .8;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.overlay .dialog {
+    position: relative;
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    opacity: 1;
+    z-index: 2;
+    margin: 0 auto;
+}
+
+
+input {
+    font-size: 50px;
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+
+}
+
+video {
+
+}
+
+#stop {
+    display: none;
+}
+
+#result-yes, #result-no {
+    display: none;
+    font-weight: bold;;
+}

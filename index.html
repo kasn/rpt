@@ -1,0 +1,111 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="/node_modules/video.js/dist/video-js.min.css" />
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<div class="content">
+    <h1>Reichs&shy;parteitags&shy;test</h1>
+    <p>Enter a YouTube URL to test your favorite (or most hated) song for Reichsparteitag compatibility.</p>
+
+    <p id="result-yes">Stop listening to this crap!</p>
+    <p id="result-no">Alright, that song is probably OK.</p>
+
+
+    <form id="search">
+        <input type="url"
+               pattern="https?://(www\.)?youtube\.com/.+"
+               required="required"
+               id="youtube-link"
+               placeholder="Enter YouTube URL …"
+               title="Must be a YouTube video URL">
+        <input type="submit" id="submit" value="Test">
+        <input type="button" id="stop" value="Enough" />
+    </form>
+</div>
+
+<div style="display: none">
+<video
+        id="vid1"
+        class="video-js vjs-default-skin"
+        controls
+        width="640" height="264"
+        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube"}] }'
+>
+</video>
+</div>
+
+<div class="image">
+
+</div>
+
+<div class="overlay">
+    <div class="backdrop">&nbsp;</div>
+    <div class="dialog">
+        <p>Could this song be played on a Reichsparteitag?</p>
+        <input type="button" value="Yes" id="yes"/>
+        <input type="button" value="No" id="no"/>
+    </div>
+</div>
+
+<!--https://www.youtube.com/watch?v=XlD-LO3ogFM-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="/node_modules/video.js/dist/video.min.js"></script>
+<script src="/node_modules/videojs-youtube/dist/Youtube.min.js"></script>
+<script type="text/javascript">
+    var myPlayer = videojs('vid1');
+
+    $('#search').on('submit', function(event) {
+        event.preventDefault();
+
+        $('#result-yes, #result-no').hide();
+
+
+        $('#youtube-link').attr('disabled', true);
+        $('#submit').hide();
+        $('#stop').show();
+        myPlayer.src($('#search').find('#youtube-link').val()).play();
+    });
+
+    $('#stop').on('click', function (event) {
+        event.preventDefault();
+        myPlayer.pause().reset();
+        $('#youtube-link').attr('disabled', false);
+        $('#submit').show();
+        $('#stop').hide();
+        $('.overlay').toggle();
+
+    });
+
+    $('#yes, #no').on('click', function (e) {
+        e.preventDefault();
+        $('.overlay').toggle();
+        $.get('/' + $(this).attr('id'), {'uri': $('#youtube-link').val()});
+
+        $('#result-' + $(this).attr('id')).show();
+
+        $('#youtube-link').val('');
+    });
+
+</script>
+</body>
+</html>
+
+</body>
+</html>
+
