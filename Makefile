@@ -1,7 +1,7 @@
-all: npm
+all: install
 
 dev: package.json
 	php -S localhost:8080
 
-package.json:
+install:
 	npm install
