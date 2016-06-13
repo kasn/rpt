@@ -84,6 +84,8 @@
         $('html, body').animate({
             scrollTop: 0,
         });
+        ga('send', 'event', 'video', 'ended', $('#video-url').val());
+
         decide();
     });
 
@@ -102,10 +104,15 @@
         $('#submit').hide();
         $('#stop').show();
         myPlayer.src($('#search').find('#video-url').val()).play();
+
+        ga('send', 'event', 'video', 'play', $('#video-url').val());
     });
 
     $('#stop').on('click', function (event) {
         event.preventDefault();
+
+        ga('send', 'event', 'video', 'stop', $('#video-url').val());
+
         decide();
     });
 
@@ -118,8 +125,11 @@
     $('#yes, #no').on('click', function (e) {
         e.preventDefault();
         $('.overlay').toggle();
-        $.get('/' + $(this).attr('id'), {'uri': $('#video-url').val()});
         $('#result-' + $(this).attr('id')).show();
+
+        ga('send', 'event', 'decision', $(this).attr('id'), $('#video-url').val());
+        $.get('/' + $(this).attr('id'), {'uri': $('#video-url').val()});
+
         $('#video-url').val('');
     });
 
