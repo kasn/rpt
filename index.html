@@ -79,7 +79,13 @@
 <script src="/node_modules/videojs-youtube/dist/Youtube.min.js"></script>
 <script type="text/javascript">
     var myPlayer = videojs('vid1');
-    myPlayer.on('ended', decide);
+
+    myPlayer.on('ended', function() {
+        $('html, body').animate({
+            scrollTop: 0,
+        });
+        decide();
+    });
 
     function decide() {
         myPlayer.pause().reset();
@@ -103,6 +109,11 @@
         decide();
     });
 
+    myPlayer.on('play', function () {
+        $('html, body').animate({
+            scrollTop: $('.image').offset().top
+        });
+    });
 
     $('#yes, #no').on('click', function (e) {
         e.preventDefault();
