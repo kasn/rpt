@@ -98,8 +98,8 @@ input {
     padding: 10px;
 }
 
-video {
-
+abbr {
+  cursor: help;
 }
 
 #stop {
