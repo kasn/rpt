@@ -38,7 +38,7 @@
         <input type="url"
                pattern="https?://(www\.)?youtube\.com/.+"
                required="required"
-               id="youtube-link"
+               id="video-url"
                placeholder="Enter YouTube URL …"
                title="Must be a YouTube video URL">
         <input type="submit" id="submit" value="Test">
@@ -67,7 +67,7 @@
 <div class="overlay">
     <div class="backdrop">&nbsp;</div>
     <div class="dialog">
-        <p>Could this song be played on a Reichsparteitag?</p>
+        <p>Can you imagine this song being played on a Reichsparteitag?</p>
         <input type="button" value="Yes" id="yes"/>
         <input type="button" value="No" id="no"/>
     </div>
@@ -89,7 +89,7 @@
 
     function decide() {
         myPlayer.pause().reset();
-        $('#youtube-link').attr('disabled', false);
+        $('#video-url').attr('disabled', false);
         $('#submit').show();
         $('#stop').hide();
         $('.overlay').toggle();
@@ -98,10 +98,10 @@
     $('#search').on('submit', function(event) {
         event.preventDefault();
         $('#result-yes, #result-no').hide();
-        $('#youtube-link').attr('disabled', true);
+        $('#video-url').attr('disabled', true);
         $('#submit').hide();
         $('#stop').show();
-        myPlayer.src($('#search').find('#youtube-link').val()).play();
+        myPlayer.src($('#search').find('#video-url').val()).play();
     });
 
     $('#stop').on('click', function (event) {
@@ -118,13 +118,13 @@
     $('#yes, #no').on('click', function (e) {
         e.preventDefault();
         $('.overlay').toggle();
-        $.get('/' + $(this).attr('id'), {'uri': $('#youtube-link').val()});
+        $.get('/' + $(this).attr('id'), {'uri': $('#video-url').val()});
         $('#result-' + $(this).attr('id')).show();
-        $('#youtube-link').val('');
+        $('#video-url').val('');
     });
 
     $('.example').on('click', function () {
-        $('#youtube-link').val($(this).data('url'));
+        $('#video-url').val($(this).data('url'));
         $('#search').submit();
     });
 </script>
