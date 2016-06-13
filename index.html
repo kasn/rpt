@@ -78,6 +78,18 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/node_modules/video.js/dist/video.min.js"></script>
 <script src="/node_modules/videojs-youtube/dist/Youtube.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-79236426-1', 'auto');
+  ga('send', 'pageview');
+  ga('set', 'anonymizeIp', true);
+</script>
+
 <script type="text/javascript">
     var myPlayer = videojs('vid1');
 
@@ -88,6 +100,12 @@
         ga('send', 'event', 'video', 'ended', $('#video-url').val());
 
         decide();
+    });
+
+    myPlayer.on('play', function () {
+        $('html, body').animate({
+            scrollTop: $('.image').offset().top
+        });
     });
 
     function decide() {
@@ -117,14 +135,9 @@
         decide();
     });
 
-    myPlayer.on('play', function () {
-        $('html, body').animate({
-            scrollTop: $('.image').offset().top
-        });
-    });
+    $('#yes, #no').on('click', function (event) {
+        event.preventDefault();
 
-    $('#yes, #no').on('click', function (e) {
-        e.preventDefault();
         $('.overlay').toggle();
         $('#result-' + $(this).attr('id')).show();
 
@@ -138,18 +151,13 @@
         $('#video-url').val($(this).data('url'));
         $('#search').submit();
     });
+
+    var url = window.location.hash.replace(/^#/, '');
+    if ((new RegExp($('#video-url').attr('pattern'))).test(url)) {
+        $('#video-url').val(url);
+        $('#search').submit();
+    }
 </script>
 
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-79236426-1', 'auto');
-  ga('send', 'pageview');
-  ga('set', 'anonymizeIp', true);
-</script>
 </body>
 </html>
